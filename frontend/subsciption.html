@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Games Platform</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="mall.html">Mall</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="subsciption.html">Subsciption</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="mywallet.html">My Wallet</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="profile.html">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="transactionhistory.html">Transaction History</a>
+              </li>
+              <li class="nav-item ml-720">
+                <a class="nav-link" href="javascript:void(0);logout();">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!--navbar end-->
+      <!--subscription item-->
+      <h3 class="text-center mt-20">Please choose your subscription plan</h3>
+      <div class="row row-cols-1 row-cols-md-3 g-4 content-center">
+        <div class="col-3 m-10">
+          <div class="card h-50 hover">
+            <div class="card-body bg-secondary text-white subscription0">
+              <h3 class="card-title type"></h3>
+              <div class="row">
+                <div class="col">Cost</div>
+                <div class="col cost"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Discount</div>
+                  <div class="col discount"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Top Up Limit</div>
+                  <div class="col topUpLimit"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Purchase Limit</div>
+                  <div class="col purchaseLimit"></div>
+              </div>              
+              <button class="btn btn-dark mt-10" onclick="subscribe(1)">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 m-10">
+          <div class="card h-50 hover">
+            <div class="card-body bg-dark text-white subscription1">
+              <h3 class="card-title type"></h3>
+              <div class="row">
+                <div class="col">Cost</div>
+                <div class="col cost"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Discount</div>
+                  <div class="col discount"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Top Up Limit</div>
+                  <div class="col topUpLimit"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Purchase Limit</div>
+                  <div class="col purchaseLimit"></div>
+              </div>              
+              <button class="btn btn-dark mt-10" onclick="subscribe(2)">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 m-10">
+          <div class="card h-50 hover">
+            <div class="card-body bg-secondary text-white subscription2">
+              <h3 class="card-title type"></h3>
+              <div class="row">
+                <div class="col">Cost</div>
+                <div class="col cost"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Discount</div>
+                  <div class="col discount"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Top Up Limit</div>
+                  <div class="col topUpLimit"></div>
+              </div>
+              <div class="row">
+                  <div class="col">Purchase Limit</div>
+                  <div class="col purchaseLimit"></div>
+              </div>              
+              <button class="btn btn-dark mt-10" onclick="subscribe(3)">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      <!--subscription end-->
+      <script>
+        const noOfSubscription = 3;
+        const url = 'http://localhost:3000/api/v1/subscriptions';
+
+        $.ajax({url: url, method: 'GET',
+        success: function(result){
+
+          for(let i=0; i < noOfSubscription; i++){
+          const selector = '.subscription' + i;
+          $(selector).find(".type").text(result[i].type);
+          $(selector).find(".cost").text(result[i].cost);
+          $(selector).find(".discount").text(result[i].discount * 100 + '%');
+          $(selector).find(".topUpLimit").text(result[i].topUpLimit === 0? 'unlimited': result[i].topUpLimit);
+          $(selector).find(".purchaseLimit").text(result[i].purchaseLimit === 0? 'unlimited': result[i].purchaseLimit);
+          }
+        console.log(result);
+        },
+        error: function(xhr, status, err){
+            console.log(xhr + ' ' + status + '' + err);
+        }})
+      </script>
+      <script src="index.js"></script>
+</body>
+</html>
